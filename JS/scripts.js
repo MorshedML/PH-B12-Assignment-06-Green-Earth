@@ -44,6 +44,7 @@ const loadCategoryDataShow = categories =>{
 }
 
 const loadAllPlants = () =>{
+    showLoading(true);
     const url = `https://openapi.programming-hero.com/api/plants`
     fetch(url)
     .then(res => res.json())
@@ -88,9 +89,11 @@ const loadAllPlantsShow =(data) =>{
                 </div>
         `
     })
+    showLoading(false);
 }
 
 const loadPlantsByCategory = (id) =>{
+    showLoading(true);
     const url =`https://openapi.programming-hero.com/api/category/${id}`;
 
     fetch(url)
@@ -140,6 +143,7 @@ const loadedPlantsShow = (plants) =>{
         `
         
     })
+    showLoading(false);
     
 }
 const totalPrice = document.getElementById('total-price');
@@ -225,6 +229,19 @@ const showModal = (onePlant) =>{
     
     `
     
+}
+
+const showLoading = status =>{
+    const loading = document.getElementById('loading');
+
+    if(status === true){
+        loading.classList.remove('hidden');
+        plantsContainer.classList.add('hidden');
+    }
+    else{
+        plantsContainer.classList.remove('hidden');
+        loading.classList.add('hidden');
+    }
 }
 
 
