@@ -1,6 +1,7 @@
 const categoryList = document.getElementById('category-list');
 const plantsContainer = document.getElementById('plant-container');
 const plantCartContainer = document.getElementById('cart-container');
+const modalContainer = document.getElementById('modalContainer');
 const loadCategory = () =>{
     const url = `https://openapi.programming-hero.com/api/categories`;
     fetch(url)
@@ -61,10 +62,10 @@ const loadAllPlantsShow =(data) =>{
         plantsContainer.innerHTML +=`
             <div id="${plant.id}" class="bg-white p-4 rounded-xl">
                     <!-- <img src="" alt=""> -->
-                    <img class="rounded-xl h-[300px] w-full" src="${plant.image}" alt="">
+                    <img class="rounded-xl md:h-[400px] h-[350px] w-full" src="${plant.image}" alt="">
 
                     <div class="py-3">
-                        <h2 class="font-semibold">${plant.name}</h2>
+                        <h2 onclick="loadPlantModal(${plant.id})" class="font-semibold">${plant.name}</h2>
                         <p class="py-2  text-sm opacity-70 md:h-[90px]">
                             ${plant.description}
                         </p>
@@ -87,8 +88,6 @@ const loadAllPlantsShow =(data) =>{
                 </div>
         `
     })
-    
-
 }
 
 const loadPlantsByCategory = (id) =>{
@@ -110,13 +109,14 @@ const loadedPlantsShow = (plants) =>{
     }
 
     plants.forEach(plant =>{
+        
         plantsContainer.innerHTML += `
             <div id="${plant.id}" class="bg-white p-4 rounded-xl">
                     <!-- <img src="" alt=""> -->
-                    <img class="rounded-xl h-[300px] w-full" src="${plant.image}" alt="">
+                    <img class="rounded-xl md:h-[400px] h-[350px] w-full" src="${plant.image}" alt="">
 
                     <div class="py-3">
-                        <h2 class="font-semibold">${plant.name}</h2>
+                        <h2 onclick="loadPlantModal(${plant.id})" class="font-semibold">${plant.name}</h2>
                         <p class="py-2  text-sm opacity-70 md:h-[90px]">
                             ${plant.description}
                         </p>
@@ -187,6 +187,45 @@ plantsContainer.addEventListener('click', e =>{
     }
 
 })
+
+const loadPlantModal = id =>{
+    const url =`https://openapi.programming-hero.com/api/plant/${id}`;
+    fetch(url)
+    .then(res => res.json())
+    .then(data => {
+        showModal(data.plants);
+    })
+    my_modal_1.showModal();
+}
+
+const showModal = (onePlant) =>{
+    
+    modalContainer.innerHTML = '';
+    modalContainer.innerHTML += `
+        <div id="${onePlant.id}" class="bg-white p-4 rounded-xl">
+
+                    <h2 class="font-semibold mb-3 md:text-2xl">${onePlant.name}</h2>
+                    <img class="rounded-xl md:h-[400px] h-[350px] w-full" src="${onePlant.image}" alt="">
+
+                    <div class="py-3">
+                        <p class="py-2 text-lg">
+                            <span class="font-semibold text-xl">Description:</span> ${onePlant.description}
+                        </p>
+
+                        <div class="flex justify-between items-center">
+                            <p class="bg-[#dcfce7] py-2 px-5 rounded-full text-[#15803D] text-sm font-semibold">${onePlant.category
+}</p>
+                            <h2 class="text-sm font-semibold">৳ <span> ${onePlant.price
+} </span> </h2>
+                        </div>
+
+                    </div>
+
+                </div>
+    
+    `
+    
+}
 
 
 
