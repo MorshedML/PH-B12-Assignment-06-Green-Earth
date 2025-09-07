@@ -1,7 +1,6 @@
 const categoryList = document.getElementById('category-list');
 const plantsContainer = document.getElementById('plant-container');
-
-
+const plantCartContainer = document.getElementById('cart-container');
 const loadCategory = () =>{
     const url = `https://openapi.programming-hero.com/api/categories`;
     fetch(url)
@@ -60,13 +59,13 @@ const loadAllPlantsShow =(data) =>{
     plantsContainer.innerHTML ='';
     data.forEach(plant =>{
         plantsContainer.innerHTML +=`
-            <div class="bg-white p-4 rounded-xl">
+            <div id="${plant.id}" class="bg-white p-4 rounded-xl">
                     <!-- <img src="" alt=""> -->
                     <img class="rounded-xl h-[300px] w-full" src="${plant.image}" alt="">
 
                     <div class="py-3">
                         <h2 class="font-semibold">${plant.name}</h2>
-                        <p class="py-2  text-sm opacity-70">
+                        <p class="py-2  text-sm opacity-70 md:h-[90px]">
                             ${plant.description}
                         </p>
 
@@ -112,13 +111,13 @@ const loadedPlantsShow = (plants) =>{
 
     plants.forEach(plant =>{
         plantsContainer.innerHTML += `
-            <div class="bg-white p-4 rounded-xl">
+            <div id="${plant.id}" class="bg-white p-4 rounded-xl">
                     <!-- <img src="" alt=""> -->
                     <img class="rounded-xl h-[300px] w-full" src="${plant.image}" alt="">
 
                     <div class="py-3">
                         <h2 class="font-semibold">${plant.name}</h2>
-                        <p class="py-2  text-sm opacity-70">
+                        <p class="py-2  text-sm opacity-70 md:h-[90px]">
                             ${plant.description}
                         </p>
 
@@ -134,7 +133,7 @@ const loadedPlantsShow = (plants) =>{
                     
 
                     <div>
-                        <button class="btn border-none bg-[#15803d] rounded-full text-white w-full">Add to Cart</button>
+                        <button onclick="" class="btn border-none bg-[#15803d] rounded-full text-white w-full">Add to Cart</button>
                     </div>
 
                 </div>
@@ -143,6 +142,53 @@ const loadedPlantsShow = (plants) =>{
     })
     
 }
+const totalPrice = document.getElementById('total-price');
+const cartTotal = document.getElementById('cart-total');
+
+plantsContainer.addEventListener('click', e =>{
+
+    if(e.target.innerText === 'Add to Cart'){
+        const title = e.target.parentNode.parentNode.children[1].children[0].innerText;
+        const total = parseInt(totalPrice.innerText)
+
+        const price = e.target.parentNode.parentNode.children[1].children[2].children[1].children[0].innerText;
+
+        plantCartContainer.innerHTML += `
+        
+        <div class="flex justify-between items-center mt-2 bg-[#f0fdf4] p-5 rounded-xl">
+            <div>
+                <h3 class="font-semibold text-sm">${title}</h3>
+                <p class="text-sm opacity-50 pt-2">${price}</p  >
+            </div>
+            <button class="btn-delete"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        `
+        const ID = document.querySelectorAll('.btn-delete');
+        ID.forEach(btn => {
+            btn.addEventListener('click', e => {
+                const cartPrice = parseInt(e.target.parentNode.parentNode.children[0].children[1].innerText);
+                e.target.parentNode.parentNode.remove();
+                
+                totalPrice.innerText = parseInt(totalPrice.innerText) - cartPrice;
+                
+                if(totalPrice.innerText === '0' || totalPrice.innerText < 0 || totalPrice.innerText === NaN){
+                    cartTotal.classList.add('hidden');
+                }
+
+            })
+        })
+        
+    totalPrice.innerText = total + parseInt(price);
+
+    }
+    const total = parseInt(totalPrice.innerText)
+    if(total > 0){
+        cartTotal.classList.remove('hidden');
+    }
+
+})
+
+
 
 
 loadCategory();
