@@ -2,6 +2,7 @@ const categoryList = document.getElementById('category-list');
 const plantsContainer = document.getElementById('plant-container');
 const plantCartContainer = document.getElementById('cart-container');
 const modalContainer = document.getElementById('modalContainer');
+const plantCartContainerMobile = document.getElementById('plantCartContainerMobile');
 const loadCategory = () =>{
     const url = `https://openapi.programming-hero.com/api/categories`;
     fetch(url)
@@ -83,7 +84,7 @@ const loadAllPlantsShow =(data) =>{
                     
 
                     <div>
-                        <button class="btn border-none bg-[#15803d] rounded-full text-white w-full">Add to Cart</button>
+                        <button onclick="getPrice(${plant.price})" class="btn border-none bg-[#15803d] rounded-full text-white w-full">Add to Cart</button>
                     </div>
 
                 </div>
@@ -136,7 +137,8 @@ const loadedPlantsShow = (plants) =>{
                     
 
                     <div>
-                        <button onclick="" class="btn border-none bg-[#15803d] rounded-full text-white w-full">Add to Cart</button>
+                        
+                        <button onclick="getPrice(${plant.price})" class="btn border-none bg-[#15803d] rounded-full text-white w-full">Add to Cart</button>
                     </div>
 
                 </div>
@@ -244,6 +246,17 @@ const showLoading = status =>{
     }
 }
 
+let sumOfPrices = 0;
+let itemTotal = 0;
+
+function getPrice(price){
+    itemTotal++;
+    sumOfPrices += price;
+
+    document.getElementById('nav-cart-total').innerText = itemTotal;
+    document.getElementById('cart-count').innerText = itemTotal;
+    document.getElementById('sum-total').innerText = sumOfPrices;
+}
 
 
 
