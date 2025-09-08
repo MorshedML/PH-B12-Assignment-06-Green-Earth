@@ -164,7 +164,7 @@ plantsContainer.addEventListener('click', e =>{
         <div class="flex justify-between items-center mt-2 bg-[#f0fdf4] p-5 rounded-xl">
             <div>
                 <h3 class="font-semibold text-sm">${title}</h3>
-                <p class="text-sm opacity-50 pt-2">${price}</p  >
+                <p class="text-sm opacity-50 pt-2">${price} x 1</p>
             </div>
             <button class="btn-delete"><i class="fa-solid fa-xmark"></i></button>
         </div>
