@@ -256,7 +256,23 @@ function getPrice(price){
     document.getElementById('nav-cart-total').innerText = itemTotal;
     document.getElementById('cart-count').innerText = itemTotal;
     document.getElementById('sum-total').innerText = sumOfPrices;
+
 }
+
+const removeAll = document.getElementById('remove-all');
+
+removeAll.addEventListener('click', e => {
+
+
+    itemTotal = 0;
+    sumOfPrices = 0;
+    document.getElementById('nav-cart-total').innerText = 0;
+    document.getElementById('cart-count').innerText = 0;
+    document.getElementById('sum-total').innerText = 0;
+    yourCartSection.innerHTML = '';
+
+});
+
 
 
 
