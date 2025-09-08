@@ -269,7 +269,6 @@ removeAll.addEventListener('click', e => {
     document.getElementById('nav-cart-total').innerText = 0;
     document.getElementById('cart-count').innerText = 0;
     document.getElementById('sum-total').innerText = 0;
-    yourCartSection.innerHTML = '';
 
 });
 
